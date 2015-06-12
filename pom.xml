@@ -204,8 +204,9 @@
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.17</version>
+                        <version>2.18.1</version>
                         <configuration>
                             <systemPropertyVariables>
                                 <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
@@ -287,8 +288,9 @@
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.17</version>
+                        <version>2.18.1</version>
                         <configuration>
                             <environmentVariables>
                                 <JBOSS_HOME>${project.build.directory}/wildfly-${version.wildfly}</JBOSS_HOME>
@@ -301,9 +303,11 @@
         <profile>
             <!--
             1. mvn package -DskipTests -P wildfly-remote-arquillian
-            2. target/wildfly-8.2.0.Final/bin/standalone
+            2. set "JBOSS_HOME=target\wildfly-8.2.0.Final\" && target\wildfly-8.2.0.Final\bin\standalone.bat
+                or
+               export JBOSS_HOME=target/wildfly-8.2.0.Final/ && ./target/wildfly-8.2.0.Final/bin/standalone.sh
             3. mvn test -P wildfly-remote-arquillian
-            4. ctrl+c # on JBoss console after test
+            4. ctrl+c # to stop JBoss
              -->
             <id>wildfly-remote-arquillian</id>
             <dependencies>

@@ -1,4 +1,4 @@
-package com.daggerok.arqjee7.test;
+package com.daggerok.arqjee7.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

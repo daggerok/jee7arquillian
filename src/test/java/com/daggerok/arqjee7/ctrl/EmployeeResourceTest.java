@@ -1,4 +1,4 @@
-package com.daggerok.arqjee7.test;
+package com.daggerok.arqjee7.ctrl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,29 +18,15 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import com.daggerok.arqjee7.arquillian.AbstractArquillianTest;
+import com.daggerok.arqjee7.model.Employee;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(Arquillian.class)
-public class EmployeeResourceTest {
+public class EmployeeResourceTest extends AbstractArquillianTest {
     private WebTarget target;
-
-    @Deployment(testable = false)
-    public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class)
-                .addClasses(
-                        RegistryApplication.class, EmployeeResource.class, Employees.class,
-                        Employee.class, EmployeeRepository.class)
-                .addAsLibrary(Maven.resolver().resolve("com.sun.xml.bind:jaxb-impl:2.0.1").withoutTransitivity().asSingleFile());
-    }
 
     @ArquillianResource
     private URL base;

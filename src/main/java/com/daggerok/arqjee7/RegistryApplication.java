@@ -1,4 +1,4 @@
-package com.daggerok.arqjee7.test;
+package com.daggerok.arqjee7;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

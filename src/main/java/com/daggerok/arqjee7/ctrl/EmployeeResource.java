@@ -1,8 +1,11 @@
-package com.daggerok.arqjee7.test;
+package com.daggerok.arqjee7.ctrl;
 
-import javax.ejb.EJB;
+import com.daggerok.arqjee7.model.Employee;
+import com.daggerok.arqjee7.dao.EmployeeRepository;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -14,8 +17,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("employee")
 @RequestScoped
+@Transactional
+@Path("employee")
 public class EmployeeResource {
     // Ideally this state should be stored in a database
     @Inject
