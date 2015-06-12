@@ -9,7 +9,7 @@
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <description>goddess jee 7 testing arquillian. true way of using it in real life :)</description>
+    <description>goddess jee 7 testing arquillian. true way of using it in the real life :)</description>
 
     <properties>
         <!-- minimal jdk -->
