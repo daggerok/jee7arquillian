@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.transaction.Transactional;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -22,10 +23,13 @@ import com.daggerok.arqjee7.arquillian.AbstractArquillianTest;
 import com.daggerok.arqjee7.model.Employee;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.logging.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 public class EmployeeResourceTest extends AbstractArquillianTest {
+    private final Logger logger = Logger.getLogger(getClass());
+
     private WebTarget target;
 
     @ArquillianResource
@@ -148,5 +152,23 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         }
         list = target.request().get(Employee[].class);
         assertEquals(0, list.length);
+    }
+
+    @Transactional
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testThrowExpectation() throws Exception {
+        Employee[] list = target.request().get(Employee[].class);
+        logger.debugf("you shouldn't se this message {}", list[list.length]);
+
+        fail("should throw an ArrayIndexOutOfBoundsException");
+    }
+
+    @Transactional
+    // @Test(expected = IllegalStateException.class)
+    public void testFailed() throws Exception {
+        Employee[] list = target.request().get(Employee[].class);
+        logger.debugf("you shouldn't se this message {}", list[list.length]);
+
+        fail("should throw an ArrayIndexOutOfBoundsException but specify to expects wrong one: IllegalStateException");
     }
 }
