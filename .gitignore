@@ -1,0 +1,9 @@
+**/*.iml
+**/.idea/*
+**/bin/*
+**/target/*
+**/.settings/*
+**/.classpath
+**/.DS_Store
+**/.project
+**/package-info.java
