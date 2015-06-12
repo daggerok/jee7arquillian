@@ -7,8 +7,10 @@ import static org.junit.Assert.fail;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Arrays;
 
+import javax.ejb.TransactionAttribute;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.transaction.Transactional;
@@ -42,9 +44,6 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         target.register(Employee.class);
     }
 
-    /**
-     * Test of getList method, of class MyResource.
-     */
     @Test
     @InSequence(1) // sequenced test! pretty cool, yeah? :)
     public void testPostAndGet() {
@@ -76,9 +75,6 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         assertEquals(3, list[2].getAge());
     }
 
-    /**
-     * Test of getPerson method, of class MyResource.
-     */
     @Test
     @InSequence(2)
     public void testGetSingle() {
@@ -91,9 +87,6 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         assertEquals(2, p.getAge());
     }
 
-    /**
-     * Test of putToList method, of class MyResource.
-     */
     @Test
     @InSequence(3)
     public void testPut() {
@@ -109,9 +102,6 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         assertEquals(4, list[3].getAge());
     }
 
-    /**
-     * Test of deleteFromList method, of class MyResource.
-     */
     @Test
     @InSequence(4)
     public void testDelete() {
@@ -134,7 +124,7 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
             String name = obj.getString("name");
             int age = obj.getInt("age");
 
-            assertTrue("Unknown Employee was returned [" + name + ", " + age + "]",
+            assertTrue(String.format("Unknown Employee was returned: {name='%s', age='%d'}", name, age),
                     Arrays.asList("Penny", "Leonard", "Sheldon").contains(name));
         }
     }
@@ -154,8 +144,9 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         assertEquals(0, list.length);
     }
 
-    @Transactional
     @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Transactional(rollbackOn = { SQLException.class,
+            ArrayIndexOutOfBoundsException.class })
     public void testThrowExpectation() throws Exception {
         Employee[] list = target.request().get(Employee[].class);
         logger.debugf("you shouldn't se this message {}", list[list.length]);
@@ -163,12 +154,12 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         fail("should throw an ArrayIndexOutOfBoundsException");
     }
 
-    @Transactional
     // @Test(expected = IllegalStateException.class)
+    @Transactional(dontRollbackOn = { IllegalStateException.class })
     public void testFailed() throws Exception {
         Employee[] list = target.request().get(Employee[].class);
         logger.debugf("you shouldn't se this message {}", list[list.length]);
 
-        fail("should throw an ArrayIndexOutOfBoundsException but specify to expects wrong one: IllegalStateException");
+        fail("should throw an ArrayIndexOutOfBoundsException, but was specify wrong one: IllegalStateException");
     }
 }
