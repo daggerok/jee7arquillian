@@ -1,4 +1,4 @@
-package com.daggerok.arqjee7.model;
+package com.daggerok.jee7app.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

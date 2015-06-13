@@ -1,11 +1,10 @@
-package com.daggerok.arqjee7.dao;
+package com.daggerok.jee7app.dao;
 
-import com.daggerok.arqjee7.model.Employee;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.daggerok.jee7app.model.Employee;
 
 import javax.ejb.Singleton;
+import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 public class EmployeeRepository {

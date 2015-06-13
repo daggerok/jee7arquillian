@@ -1,20 +1,12 @@
-package com.daggerok.arqjee7.ctrl;
+package com.daggerok.jee7app.ctrl;
 
-import com.daggerok.arqjee7.model.Employee;
-import com.daggerok.arqjee7.dao.EmployeeRepository;
+import com.daggerok.jee7app.dao.EmployeeRepository;
+import com.daggerok.jee7app.model.Employee;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @RequestScoped

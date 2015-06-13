@@ -1,6 +1,6 @@
-package com.daggerok.arqjee7.arquillian;
+package com.daggerok.jee7app.arquillian;
 
-import com.daggerok.arqjee7.RegistryApplication;
+import com.daggerok.jee7app.Jee7app;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -19,7 +19,7 @@ public abstract class AbstractArquillianTest {
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
-                .addPackages(true, RegistryApplication.class.getPackage())
+                .addPackages(true, Jee7app.class.getPackage())
                 .addAsLibraries(
                         Maven.resolver().resolve("com.sun.xml.bind:jaxb-impl:2.0.1").withoutTransitivity().asSingleFile()
                 );

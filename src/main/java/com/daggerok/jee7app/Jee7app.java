@@ -1,7 +1,7 @@
-package com.daggerok.arqjee7;
+package com.daggerok.jee7app;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 @ApplicationPath("registry")
-public class RegistryApplication extends Application {}
+public class Jee7app extends Application {}

@@ -1,16 +1,13 @@
-package com.daggerok.arqjee7.ctrl;
+package com.daggerok.jee7app.ctrl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import com.daggerok.jee7app.arquillian.AbstractArquillianTest;
+import com.daggerok.jee7app.model.Employee;
+import org.jboss.arquillian.junit.InSequence;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.logging.Logger;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.Arrays;
-
-import javax.ejb.TransactionAttribute;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.transaction.Transactional;
@@ -20,14 +17,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.Arrays;
 
-import com.daggerok.arqjee7.arquillian.AbstractArquillianTest;
-import com.daggerok.arqjee7.model.Employee;
-import org.jboss.arquillian.junit.InSequence;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.logging.Logger;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class EmployeeResourceTest extends AbstractArquillianTest {
     private final Logger logger = Logger.getLogger(getClass());
@@ -145,8 +141,8 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    @Transactional(rollbackOn = { SQLException.class,
-            ArrayIndexOutOfBoundsException.class })
+    @Transactional(rollbackOn = {SQLException.class,
+            ArrayIndexOutOfBoundsException.class})
     public void testThrowExpectation() throws Exception {
         Employee[] list = target.request().get(Employee[].class);
         logger.debugf("you shouldn't se this message {}", list[list.length]);
@@ -155,7 +151,7 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
     }
 
     // @Test(expected = IllegalStateException.class)
-    @Transactional(dontRollbackOn = { IllegalStateException.class })
+    @Transactional(dontRollbackOn = {IllegalStateException.class})
     public void testFailed() throws Exception {
         Employee[] list = target.request().get(Employee[].class);
         logger.debugf("you shouldn't se this message {}", list[list.length]);
