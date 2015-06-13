@@ -4,7 +4,7 @@ jee arquillian testing without pain :)
 
 #### to test in different ways look into pom.xml profiles configurations
     
-    $ mvn test # or # mvn test -Pwildfly-embedded-arquillian # default
+    $ mvn test # or $ mvn test -Pwildfly-embedded-arquillian # default
     $ mvn test -Pwildfly-managed-arquillian
     $ mvn test -Pwildfly-remote-arquillian (see comments)
     $ mvn test -Pglassfish-embedded-arquillian
