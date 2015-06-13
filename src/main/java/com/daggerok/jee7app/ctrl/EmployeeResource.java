@@ -8,48 +8,51 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.logging.Logger;
 
 @RequestScoped
 @Transactional
 @Path("employee")
 public class EmployeeResource {
-    // Ideally this state should be stored in a database
+    private static final Logger logger = Logger.getLogger(EmployeeResource.class.getName());
+
     @Inject
-    EmployeeRepository bean;
+    EmployeeRepository employeeRepository;
 
     @GET
-    @Produces({"application/xml", "application/json"})
-    public Employee[] getList() {
-        return bean.getEmployees().toArray(new Employee[0]);
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Employee> get() {
+        return employeeRepository.findAll();
     }
 
     @GET
-    @Produces({"application/json", "application/xml"})
     @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Employee get(@PathParam("id") int id) {
-        if (id < bean.getEmployees().size())
-            return bean.getEmployees().get(id);
-        else
-            return null;
+        return employeeRepository.findOne(id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public void addToList(@FormParam("name") String name,
-                          @FormParam("age") int age) {
-        System.out.println("Creating a new item: " + name);
-        bean.addEmployee(new Employee(name, age));
+    public void post(@FormParam("name") String name, @FormParam("age") int age) {
+        Employee employee = new Employee(name, age);
+
+        logger.info(String.format("Creating a new one '%s'", employee));
+        employeeRepository.save(employee);
     }
 
     @PUT
-    public void putToList(@FormParam("name") String name,
-                          @FormParam("age") int age) {
-        addToList(name, age);
+    public void put(@FormParam("name") String name, @FormParam("age") int age) {
+        logger.info(String.format("updating item '%s'", name));
+        // put should update, but...
+        post(name, age);
     }
 
     @DELETE
     @Path("{name}")
-    public void deleteFromList(@PathParam("name") String name) {
-        bean.deleteEmployee(name);
+    public void delete(@PathParam("name") String name) {
+        logger.info(String.format("removing item '%s'", name));
+        employeeRepository.deleteByName(name);
     }
 }

@@ -58,29 +58,26 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         map.add("age", "3");
         target.request().post(Entity.form(map));
 
-        Employee[] list = target.request().get(Employee[].class);
-        assertEquals(3, list.length);
+        Employee[] employees = target.request().get(Employee[].class);
+        assertEquals(3, employees.length);
 
-        assertEquals("Penny", list[0].getName());
-        assertEquals(1, list[0].getAge());
+        assertEquals("Penny", employees[0].getName());
+        assertEquals(1, employees[0].getAge());
 
-        assertEquals("Leonard", list[1].getName());
-        assertEquals(2, list[1].getAge());
+        assertEquals("Leonard", employees[1].getName());
+        assertEquals(2, employees[1].getAge());
 
-        assertEquals("Sheldon", list[2].getName());
-        assertEquals(3, list[2].getAge());
+        assertEquals("Sheldon", employees[2].getName());
+        assertEquals(3, employees[2].getAge());
     }
 
     @Test
     @InSequence(2)
     public void testGetSingle() {
-        Employee p = target
-                .path("{id}")
-                .resolveTemplate("id", "1")
-                .request(MediaType.APPLICATION_XML)
-                .get(Employee.class);
-        assertEquals("Leonard", p.getName());
-        assertEquals(2, p.getAge());
+        Employee employee = target.path("{id}").resolveTemplate("id", "1")
+                .request(MediaType.APPLICATION_XML).get(Employee.class);
+        assertEquals("Leonard", employee.getName());
+        assertEquals(2, employee.getAge());
     }
 
     @Test
@@ -91,61 +88,53 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
         map.add("age", "4");
         target.request().post(Entity.form(map));
 
-        Employee[] list = target.request().get(Employee[].class);
-        assertEquals(4, list.length);
-
-        assertEquals("Howard", list[3].getName());
-        assertEquals(4, list[3].getAge());
+        Employee[] employees = target.request().get(Employee[].class);
+        assertEquals(4, employees.length);
+        assertEquals("Howard", employees[3].getName());
+        assertEquals(4, employees[3].getAge());
     }
 
     @Test
     @InSequence(4)
     public void testDelete() {
-        target
-                .path("{name}")
-                .resolveTemplate("name", "Howard")
-                .request()
-                .delete();
-        Employee[] list = target.request().get(Employee[].class);
-        assertEquals(3, list.length);
+        target.path("{name}").resolveTemplate("name", "Howard").request().delete();
+        Employee[] employees = target.request().get(Employee[].class);
+        assertEquals(3, employees.length);
     }
 
     @Test
     @InSequence(5)
     public void testClientSideNegotiation() {
-        JsonArray json = target.request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
+        JsonArray json = target.request().accept(MediaType.APPLICATION_JSON)
+                .get(JsonArray.class);
         assertEquals(3, json.size());
         for (int i = 0; i < json.size(); i++) {
             JsonObject obj = json.getJsonObject(i);
             String name = obj.getString("name");
             int age = obj.getInt("age");
 
-            assertTrue(String.format("Unknown Employee was returned: {name='%s', age='%d'}", name, age),
-                    Arrays.asList("Penny", "Leonard", "Sheldon").contains(name));
+            assertTrue(String.format("Unknown Employee was returned: {name='%s', age='%d'}"
+                    , name, age), Arrays.asList("Penny", "Leonard", "Sheldon").contains(name));
         }
     }
 
     @Test
     @InSequence(6)
     public void testDeleteAll() {
-        Employee[] list = target.request().get(Employee[].class);
-        for (Employee p : list) {
-            target
-                    .path("{name}")
-                    .resolveTemplate("name", p.getName())
-                    .request()
-                    .delete();
+        Employee[] employees = target.request().get(Employee[].class);
+        for (Employee p : employees) {
+            target.path("{name}").resolveTemplate("name", p.getName()).request().delete();
         }
-        list = target.request().get(Employee[].class);
-        assertEquals(0, list.length);
+        employees = target.request().get(Employee[].class);
+        assertEquals(0, employees.length);
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     @Transactional(rollbackOn = {SQLException.class,
             ArrayIndexOutOfBoundsException.class})
     public void testThrowExpectation() throws Exception {
-        Employee[] list = target.request().get(Employee[].class);
-        logger.debugf("you shouldn't se this message {}", list[list.length]);
+        Employee[] employees = target.request().get(Employee[].class);
+        logger.debugf("you shouldn't se this message {}", employees[employees.length]);
 
         fail("should throw an ArrayIndexOutOfBoundsException");
     }
@@ -153,9 +142,10 @@ public class EmployeeResourceTest extends AbstractArquillianTest {
     // @Test(expected = IllegalStateException.class)
     @Transactional(dontRollbackOn = {IllegalStateException.class})
     public void testFailed() throws Exception {
-        Employee[] list = target.request().get(Employee[].class);
-        logger.debugf("you shouldn't se this message {}", list[list.length]);
+        Employee[] employees = target.request().get(Employee[].class);
+        logger.debugf("you shouldn't se this message {}", employees[employees.length]);
 
-        fail("should throw an ArrayIndexOutOfBoundsException, but was specify wrong one: IllegalStateException");
+        fail("should throw an ArrayIndexOutOfBoundsException, " +
+                "but was specify wrong one: IllegalStateException");
     }
 }

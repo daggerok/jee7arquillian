@@ -8,31 +8,36 @@ import java.util.List;
 
 @Singleton
 public class EmployeeRepository {
-    private final List<Employee> list;
+    private final List<Employee> db = new ArrayList<>();
 
-    public EmployeeRepository() {
-        list = new ArrayList<>();
+    public void save(Employee employee) {
+        db.add(employee);
     }
 
-    public void addEmployee(Employee e) {
-        list.add(e);
+    public void deleteByName(String name) {
+        Employee employee = findByName(name);
+
+        if (employee != null) {
+            db.remove(employee);
+        }
     }
 
-    public void deleteEmployee(String name) {
-        Employee p = findEmployeeByName(name);
-        if (p != null)
-            list.remove(p);
-    }
-
-    private Employee findEmployeeByName(String name) {
-        for (Employee e : list) {
-            if (name.equals(e.getName()))
-                return e;
+    private Employee findByName(String name) {
+        for (Employee employee : db) {
+            if (name.equals(employee.getName())) {
+                return employee;
+            }
         }
         return null;
     }
 
-    public List<Employee> getEmployees() {
-        return list;
+    public List<Employee> findAll() {
+        return db;
+    }
+
+    public Employee findOne(int id) {
+        if (id >= db.size()) return null;
+
+        return db.get(id);
     }
 }
