@@ -27,23 +27,21 @@ public class EmployeeResource {
     @Produces({"application/json", "application/xml"})
     @Path("{id}")
     public Employee get(@PathParam("id") int id) {
-        if (id < bean.getEmployees().size())
+        if (id < bean.getEmployees().size()) {
             return bean.getEmployees().get(id);
-        else
-            return null;
+        }
+        return null;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public void addToList(@FormParam("name") String name,
-                          @FormParam("age") int age) {
+    public void addToList(@FormParam("name") String name, @FormParam("age") int age) {
         System.out.println("Creating a new item: " + name);
         bean.addEmployee(new Employee(name, age));
     }
 
     @PUT
-    public void putToList(@FormParam("name") String name,
-                          @FormParam("age") int age) {
+    public void putToList(@FormParam("name") String name, @FormParam("age") int age) {
         addToList(name, age);
     }
 
