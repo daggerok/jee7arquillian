@@ -9,7 +9,7 @@ jee arquillian testing without pain :)
     $ mvn test -Pwildfly-remote-arquillian (see comments)
     $ mvn test -Pglassfish-embedded-arquillian
 
-#### to run into dev container user jbossas profile
+#### use jbossas profile to run developed war into dev container
     
     $ mvn -Pjbossas install && mvn -Pjbossas jboss-as:run
     $ mvn -Pjbossas jboss-as:deploy
