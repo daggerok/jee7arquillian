@@ -1,6 +1,6 @@
 # jee7arquillian
 
-jee arquillian testing without pain :)
+## jee arquillian testing without pain :)
 
 #### to test in different ways look into pom.xml profiles configurations
     
