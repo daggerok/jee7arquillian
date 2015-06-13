@@ -13,13 +13,13 @@ jee arquillian testing without pain :)
     
     $ mvn -Pjbossas install && mvn -Pjbossas jboss-as:run
     $ mvn -Pjbossas jboss-as:deploy
-    $ # do something... for example
+    # do something... for example
     $ curl --data "age=-100&name=Maksimko" http://0.0.0.0:8080/jee7arquillian-1.0/registry/employee
     $ curl -X POST --data "age=1&name=Maksimko%20POST" http://0.0.0.0:8080/jee7arquillian-1.0/registry/employee
     $ curl -X PUT --data "age=100&name=Maksimko%20PUT" http://0.0.0.0:8080/jee7arquillian-1.0/registry/employee
     $ curl -H "Accept: application/json" http://0.0.0.0:8080/jee7arquillian-1.0/registry/employee
     $ mvn -Pjbossas jboss-as:redeploy
-    $ # do something else...
+    # do something else...
     $ mvn -Pjbossas jboss-as:shutdown
 
 #### read more
