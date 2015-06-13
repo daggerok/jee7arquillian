@@ -2,14 +2,14 @@
 
 jee arquillian testing without pain :)
 
-### to test in different ways look into pom.xml profiles configurations
+#### to test in different ways look into pom.xml profiles configurations
     
     $ mvn test # or # mvn test -Pwildfly-embedded-arquillian # default
     $ mvn test -Pwildfly-managed-arquillian
     $ mvn test -Pwildfly-remote-arquillian (see comments)
     $ mvn test -Pglassfish-embedded-arquillian
 
-### to run into dev container user jbossas profile
+#### to run into dev container user jbossas profile
     
     $ mvn -Pjbossas install && mvn -Pjbossas jboss-as:run
     $ mvn -Pjbossas jboss-as:deploy
@@ -22,7 +22,7 @@ jee arquillian testing without pain :)
     $ # do something else...
     $ mvn -Pjbossas jboss-as:shutdown
 
-### read more
+#### read more
 
 http://arquillian.org/
 https://docs.jboss.org/author/display/ARQ/Reference+Guide
