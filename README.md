@@ -1,4 +1,5 @@
-# jee7arquillian
+jee7arquillian [![build](https://travis-ci.org/daggerok/jee7arquillian.svg?branch=master)](https://travis-ci.org/daggerok/jee7arquillian)
+==============
 
 ## jee arquillian testing without pain :)
 
